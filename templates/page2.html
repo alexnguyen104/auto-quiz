@@ -9,7 +9,9 @@
 </head>
 
 <body>
-
+  <div id="loading_screen">
+    <p>Loading...</p>
+  </div>
   <nav id="navmenu" class="navmenu">
     <ul>
       <li>
@@ -40,7 +42,6 @@
           </div>
           <div>
             <button id="generateButton" type="submit">Generate</button>
-            <!-- <div id="resultDisplay"></div>  -->
           </div>
         </div>
     </form>
@@ -48,19 +49,6 @@
     <script>
       const generateButton = document.getElementById("generateButton");
       const resultDisplay = document.getElementById("resultDisplay");
-      // generateButton.addEventListener("click", function () {
-      //   const data = JSON.parse(localStorage.getItem("ocrResults") || "[]");
-      //   if (data.length === 0) {
-      //     resultDisplay.innerHTML = "Không có kết quả nào.";
-      //   } else {
-      //     resultDisplay.innerHTML = "";
-      //     data.forEach((item) => {
-      //       const el = document.createElement("div");
-      //       el.innerHTML = <h3>${item.filename}</h3><pre>${item.text}</pre>;
-      //       resultDisplay.appendChild(el);
-      //     });
-      //   }
-      // });
       document.getElementById('data_form').addEventListener('submit', function (event) {
         event.preventDefault();
         const formData = new FormData(event.target);
