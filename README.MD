@@ -36,7 +36,7 @@ python -m venv env
 // MAC OS
 source env/bin/activate
 
-// WINDOWS
+// WINDOWS (chạy trong cmd)
 env\Scripts\activate.bat
 
 hoặc
