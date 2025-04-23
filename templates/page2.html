@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SERVICE</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='a.css') }}">
+</head>
+
+<body>
+
+  <nav id="navmenu" class="navmenu">
+    <ul>
+      <li>
+        <a href="{{ url_for('home') }}">Home<br /></a>
+      </li>
+      <li><a href="{{ url_for('home_pdf') }}" class="active">PDF</a></li>
+      <li><a href="about.html">ABOUT</a></li>
+    </ul>
+    </ul>
+    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+  </nav>
+  <div class="container">
+    <h1>AUTO QUIZ</h1>
+    <form method="POST" id="data_form">
+      <div class="form-box">
+        <input type="text" name="file_name" placeholder="File name" required /><br />
+        <input type="number" min="1" max="100" name="num_questions" placeholder="Number of questions (1-100)" required /><br />
+        <div class="options">
+          <div class="option-box radio-detailed">
+            <label>DETAIL LEVEL</label>
+            <label class="radio-label"><input type="radio" name="detail" value="Detailed" required />Detailed</label>
+            <label class="radio-label"><input type="radio" name="detail" value="Less Detailed" />Less Detailed</label>
+          </div>
+          <div class="option-box radio-language">
+            <label>LANGUAGE</label>
+            <label class="radio-label"><input type="radio" name="language" value="English" required />English</label>
+            <label class="radio-label"><input type="radio" name="language" value="Vietnamese" />Vietnamese</label>
+          </div>
+          <div>
+            <button id="generateButton" type="submit">Generate</button>
+            <!-- <div id="resultDisplay"></div>  -->
+          </div>
+        </div>
+    </form>
+
+    <script>
+      const generateButton = document.getElementById("generateButton");
+      const resultDisplay = document.getElementById("resultDisplay");
+      // generateButton.addEventListener("click", function () {
+      //   const data = JSON.parse(localStorage.getItem("ocrResults") || "[]");
+      //   if (data.length === 0) {
+      //     resultDisplay.innerHTML = "Không có kết quả nào.";
+      //   } else {
+      //     resultDisplay.innerHTML = "";
+      //     data.forEach((item) => {
+      //       const el = document.createElement("div");
+      //       el.innerHTML = <h3>${item.filename}</h3><pre>${item.text}</pre>;
+      //       resultDisplay.appendChild(el);
+      //     });
+      //   }
+      // });
+      document.getElementById('data_form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        fetch('/get_form_data', {
+          method: 'POST',
+          body: formData
+        }).then(response => response.json())
+          .then(data => {
+            console.log(data)
+            window.location.href = "/result";
+          })
+          .catch(error => console.error('Error:', error));
+      });
+    </script>
+
+
+</body>
+
+</html>
