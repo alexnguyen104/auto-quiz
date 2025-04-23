@@ -11,20 +11,28 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def clear_session():
     session.clear()
-
-    folders = ['static/uploads/','static/result/']
-    for folder in folders:
+    # folders = ['static/uploads/','static/result/']
+    # for folder in folders:
+    #     try:
+    #         for filename in os.listdir(folder):
+    #             file_path = os.path.join(folder, filename)
+    #             if os.path.isfile(file_path) or os.path.islink(file_path):
+    #                 os.unlink(file_path)
+    #             elif os.path.isdir(file_path):
+    #                 shutil.rmtree(file_path)
+    #     except Exception as e:
+    #         print('Failed to delete %s. Reason: %s' % (file_path, e))
+    folder = 'static/uploads/'
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
         try:
-            for filename in os.listdir(folder):
-                file_path = os.path.join(folder, filename)
-                if os.path.isfile(file_path) or os.path.islink(file_path):
-                    os.unlink(file_path)
-                elif os.path.isdir(file_path):
-                    shutil.rmtree(file_path)
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+            print("cleared old session.")
         except Exception as e:
             print('Failed to delete %s. Reason: %s' % (file_path, e))
-    print("cleared old session.")
-
 
 def ai_process(language, mode, num_questions, file_name, file_paths):
     user_info = {
@@ -92,11 +100,6 @@ def get_form_data():
 def result():
     output_filepath = session["output_filepath"]
     return render_template('result.html', output_filepath=output_filepath)
-
-@app.route('/clear_old_session', methods=['POST'])
-def clear_old_session():
-    clear_session()
-    return "success"
 
 if __name__ == '__main__':
     app.secret_key = 'super secret key'
