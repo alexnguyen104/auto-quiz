@@ -102,6 +102,10 @@ def result():
     output_filepath = session["output_filepath"]
     return render_template('result.html', output_filepath=output_filepath)
 
+@app.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html')
+
 @app.route('/clear_old_session', methods=['POST'])
 def clear_old_session():
     clear_session()
