@@ -4,20 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Auto Quiz</title>
+  <title>Auto Quiz - Form</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='a.css') }}">
 </head>
 
 <body>
-  <!-- <div id="loading_screen">
-    <p>Loading...</p>
-  </div> -->
+  <div id="loading_screen">
+    <p>Creating file...</p>
+    <img src="{{ url_for('static', filename='assets/loader.gif') }}" alt="loading">
+  </div>
   <nav id="navmenu" class="navmenu">
     <ul>
+      <li><a href="{{ url_for('home_pdf') }}">PDF</a></li>
       <li>
         <a href="{{ url_for('home') }}">Home<br /></a>
       </li>
-      <li><a href="{{ url_for('home_pdf') }}" class="active">PDF</a></li>
       <li><a href="about.html">ABOUT</a></li>
     </ul>
     </ul>
@@ -49,8 +50,13 @@
     <script>
       const generateButton = document.getElementById("generateButton");
       const resultDisplay = document.getElementById("resultDisplay");
+      const loading = document.getElementById("loading_screen");
+
       document.getElementById('data_form').addEventListener('submit', function (event) {
         event.preventDefault();
+
+        loading.style.display = "flex"
+
         const formData = new FormData(event.target);
         fetch('/get_form_data', {
           method: 'POST',

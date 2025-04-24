@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='result.css') }}" />
 </head>
 
-<body>
+<body onbeforeunload="leave_session()">
     <nav id="navmenu" class="navmenu">
         <ul>
             <li></li>
@@ -28,6 +28,18 @@
             Download here
         </button>
     </a>
+
+    <script>
+        function leave_session(){
+            fetch('/clear_old_session', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "signal": "clear" })
+            });
+        }
+    </script>
 </body>
 
 </html>

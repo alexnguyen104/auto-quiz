@@ -11,28 +11,28 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def clear_session():
     session.clear()
-    # folders = ['static/uploads/','static/result/']
-    # for folder in folders:
-    #     try:
-    #         for filename in os.listdir(folder):
-    #             file_path = os.path.join(folder, filename)
-    #             if os.path.isfile(file_path) or os.path.islink(file_path):
-    #                 os.unlink(file_path)
-    #             elif os.path.isdir(file_path):
-    #                 shutil.rmtree(file_path)
-    #     except Exception as e:
-    #         print('Failed to delete %s. Reason: %s' % (file_path, e))
-    folder = 'static/uploads/'
-    for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
+    folders = ['static/uploads/','static/result/']
+    for folder in folders:
         try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-            print("cleared old session.")
+            for filename in os.listdir(folder):
+                file_path = os.path.join(folder, filename)
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
         except Exception as e:
             print('Failed to delete %s. Reason: %s' % (file_path, e))
+    print("cleared old session.")
+    # folder = 'static/uploads/'
+    # for filename in os.listdir(folder):
+    #     file_path = os.path.join(folder, filename)
+    #     try:
+    #         if os.path.isfile(file_path) or os.path.islink(file_path):
+    #             os.unlink(file_path)
+    #         elif os.path.isdir(file_path):
+    #             shutil.rmtree(file_path)
+    #     except Exception as e:
+    #         print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 def ai_process(language, mode, num_questions, file_name, file_paths):
     user_info = {
@@ -50,16 +50,17 @@ def ai_process(language, mode, num_questions, file_name, file_paths):
     return output_filepath
 
 @app.route('/')
-def home():
-    return render_template('index_image.html', active_page='home')
-
-@app.route('/pdf')
 def home_pdf():
-    return render_template('index_pdf.html')
+    return render_template('index_pdf.html', active_page='home')
+
+@app.route('/other')
+def home():
+    return render_template('index_image.html')
 
 @app.route('/upload', methods=['POST'])
 def upload():
     files = request.files.getlist('file')
+    print(files)
     n = 0
     for file in files:
         filename = secure_filename(file.filename)
@@ -101,6 +102,10 @@ def result():
     output_filepath = session["output_filepath"]
     return render_template('result.html', output_filepath=output_filepath)
 
+@app.route('/clear_old_session', methods=['POST'])
+def clear_old_session():
+    clear_session()
+    return "clear successfully"
 if __name__ == '__main__':
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
