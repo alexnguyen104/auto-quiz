@@ -60,7 +60,6 @@ def home():
 @app.route('/upload', methods=['POST'])
 def upload():
     files = request.files.getlist('file')
-    print(files)
     n = 0
     for file in files:
         filename = secure_filename(file.filename)
