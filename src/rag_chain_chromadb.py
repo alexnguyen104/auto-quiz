@@ -1,5 +1,3 @@
-# the codes are inspired by @bexgboost
-
 import os
 from dotenv import load_dotenv
 from langchain.prompts import PromptTemplate
@@ -14,18 +12,6 @@ import chromadb
 load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI-API-KEY')
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-
-# RAG_PROMPT_TEMPLATE = """
-# Generate {num_questions} multiple-choice quiz questions with 4 options based on the following information.
-# Information: {context}
-# The questions are in {language}.
-# The questions should test knowledge related to the information and be more specific in the question's instruction so user understand the context.
-# Focus on the main information.
-# Provide four answer choices, labeled A, B, C, and D, with only one being correct.
-# Do not make all answers the same option.
-# Just provide the question, do not say anything else.
-# Your response must be formatted as a 2-D list, each child element contains with 6 elements , named "questions", exactly as follows: [QUESTION, OPTION A, OPTION B, OPTION C, OPTION D, ANSWER].
-# """
 
 RAG_PROMPT_TEMPLATE = """
 You are an AI quiz generator. Your task is to create {num_questions} multiple-choice quiz questions based on the following information:
@@ -59,7 +45,7 @@ def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
 def create_rag_chain(chunks, user_info):
-    # get rid of "tenants" error
+    # tránh "tenants" error
     chromadb.api.client.SharedSystemClient.clear_system_cache()
 
     embeddings = OpenAIEmbeddings()
