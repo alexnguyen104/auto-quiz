@@ -1,5 +1,3 @@
-# Mã code này lấy cảm hứng từ bài blog của @bexgboost
-
 import logging
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.text_splitter import Language
