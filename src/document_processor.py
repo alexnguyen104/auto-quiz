@@ -58,7 +58,3 @@ def process_document(source, mode, doc_num = 1):
         return process_pdf(source[0], chunk_size)
     else:
         return process_image(source, chunk_size, doc_num)
-    # elif source[].lower().endswith((".png", ".jpg", ".jpeg")):
-    #     return process_image(source, chunk_size, doc_num)
-    # else:
-    #     raise ValueError(f"Unsupported file type: {source}")
